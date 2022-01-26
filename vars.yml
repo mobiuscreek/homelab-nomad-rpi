@@ -1,0 +1,21 @@
+mac_address_mapping:
+  # wlan MAC address
+  "b8:27:eb:f6:ff:0d":
+    name: homecluster1
+    ip: "192.168.0.220"
+  "60:7b:06:fd:4f:d7":
+    name: homecluster2
+    ip: "192.168.0.221"
+
+  
+
+# Nameservers to use in resolv.conf.
+dns_nameservers:
+  - "192.168.0.74"
+  - "8.8.8.8"
+
+cluster_ip_gateway: "192.168.0.1"
+
+# Docker config
+docker_users:
+  - pi
