@@ -1,27 +1,33 @@
 ---
-- hosts: all
+
+- hosts: pi-cluster
   become: yes
 
   vars_files:
     - vars.yml
 
   roles:
-    - geerlingguy.docker_arm
-  tags:
-    - docker
+    - role: geerlingguy.docker_arm
+      tags:
+        - docker
   
-
   tasks:
     - name: Set the current MAC address for eth0.
+      tags:
+        - network
       set_fact:
         cluster_mac_address: "{{ hostvars[inventory_hostname].ansible_default_ipv4.macaddress }}"
 
     - name: Set variables based on eth0 MAC address.
+      tags:
+        - network
       set_fact:
         cluster_hostname: "{{ mac_address_mapping[cluster_mac_address].name }}"
         cluster_ip_address: "{{ mac_address_mapping[cluster_mac_address].ip }}"
 
     - name: Set up networking-related files.
+      tags:
+        - network
       template:
         src: "templates/{{ item.template }}"
         dest: "{{ item.dest }}"
@@ -35,14 +41,15 @@
         - update hostname
         - delete dhcp leases
 
-  handlers:
-    - name: update hostname
-      command: "hostname {{ cluster_hostname }}"
 
-    - name: delete dhcp leases
-      file:
-        path: /var/lib/dhcp/dhclient.leases
-        state: absent
-      with_items:
-        - /var/lib/dhcp/dhclient.leases
-        - /var/lib/dhcpcd5/dhcpcd-eth0.lease
+  handlers:
+  - name: update hostname
+    command: "hostname {{ cluster_hostname }}"
+
+  - name: delete dhcp leases
+    file:
+      path: /var/lib/dhcp/dhclient.leases
+      state: absent
+    with_items:
+      - /var/lib/dhcp/dhclient.leases
+      - /var/lib/dhcpcd5/dhcpcd-eth0.lease
