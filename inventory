@@ -2,5 +2,31 @@
 192.168.0.220
 192.168.0.221
 
+[pi-server]
+192.168.0.222
+
+[consul_instances]
+192.168.0.222 consul_node_role=server
+192.168.0.221 consul_node_role=client
+192.168.0.220 consul_node_role=client
+
+[pi-server:vars]
+ansible_ssh_user=pi
+
 [pi-cluster:vars]
 ansible_ssh_user=pi
+
+[consul_instances:vars]
+ansible_ssh_user=pi
+consul_datacenter=homecluster
+consul_client_address=0.0.0.0
+consul_bootstrap_expect=1
+
+[nomad_instances]
+192.168.0.222 nomad_node_role=server
+192.168.0.220 nomad_node_role=client
+192.168.0.221 nomad_node_role=client
+
+[nomad_instances:vars]
+ansible_ssh_user=pi
+nomad_datacenter=homecluster
