@@ -1,17 +1,24 @@
 ---
 
-- hosts: pi-cluster
+- hosts: consul_instances
   become: yes
-
   vars_files:
     - vars.yml
+
 
   roles:
     - role: geerlingguy.docker_arm
       tags:
         - docker
+    - role: ansible-consul
+      tags:
+        - ansible-consul
+    - role: ansible-nomad
+      tags:
+        - ansible-nomad
   
   tasks:
+
     - name: Set the current MAC address for eth0.
       tags:
         - network
