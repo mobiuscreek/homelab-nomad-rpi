@@ -48,8 +48,39 @@
         - update hostname
         - delete dhcp leases
 
+    - name: Port configuration for NFS
+        - NFS server conf
+      shell: apt-get install ufw
+             ufw allow 22
+             ufw allow 111
+             ufw allow 2049
+             ufw enable
+             reboot
+    - name: Create mount point
+      tags:
+        - NFS server conf
+      shell: | 
+               apt-get install nfs-kernel-server
+               mkdir -p /mnt/nfs
+               chown -R pi:pi /mnt/nfs
+               mount /dev/sda /mnt/nfs 
+               echo "/mnt/nfs 192.168.0.222(rw,sync,no_subtree_check)" >> /etc/exports 
+               echo "/mnt/nfs 192.168.0.221(rw,sync,no_subtree_check)" >> /etc/exports 
+               /etc/init.d/rpcbind restart 
+               /etc/init.d/nfs-kernel-server restart
+               exportfs -f
+
+    - name: Create mount point
+      tags:
+        - NFS client conf
+      shell: |
+              mkdir -p /mnt/nfs
+              chown -R pi:pi /mnt/nfs 
+              mount 192.168.0.220:/mnt/nfs /mnt/nfs  
+
 
   handlers:
+
   - name: update hostname
     command: "hostname {{ cluster_hostname }}"
 
