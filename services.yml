@@ -1,0 +1,74 @@
+job "collection-webapp" {
+  datacenters = ["homecluster"]
+      type = "service"
+      group "collection" {
+        volume "nomad_nfs" {
+          type = "host"
+          read_only= false
+          source = "nomad_nfs"
+        }
+        restart {
+          attempts = 10
+          interval = "5m"
+          delay = "26s"
+          mode = "delay"
+        }
+        network {
+          port "http" { 
+              static = 8080
+              to = 8080 
+               }
+          port "bck" {
+              static = 8090
+              to = 80 
+              }
+                }
+
+          task "backend" {
+
+              driver = "docker"
+              config {
+                image = "lonelobo0070/collection_manager_backend:latest"
+                ports = ["http"]
+              }
+              service {
+                name = "collection-backend"
+              }
+               lifecycle {
+                hook    = "prestart"
+                sidecar = true
+              }
+              }
+          task "frontend" {
+              driver = "docker"
+              config {
+                  image = "lonelobo0070/collection_manager_frontend:latest"
+                  ports = ["bck"] 
+                }
+              }
+              service {
+                name = "collection-frontend"
+              }
+          }
+          task "database" {
+              env {
+                POSTGRES_DB = "collection_manager"
+                POSTGRES_USER = "root"
+                POSTGRES_PASSWORD = "root"
+              }
+              driver = "docker"
+              config {
+                image = "postgres:latest"
+                volumes = ["nomad_nfs:/var/lib/postgresql/data"]  
+                }
+              service {
+                name = "postgres"
+              }      
+              lifecycle {
+                hook    = "prestart"
+                sidecar = true
+               }
+
+
+      }
+}
