@@ -18,6 +18,23 @@
         - ansible-nomad
   
   tasks:
+    - name: Set nomad cluster env variable
+      environment:
+        NOMAD_ADDR: "http://homeserver.local:4646"
+      shell: export NOMAD_ADDR
+      tags:
+        - ansible-nomad
+
+    - name: Set nomad host volume
+      tags:
+        - ansible-nomad-nfs
+      become: yes
+      shell: echo 'client {
+          host_volume "nomad_nfs" {
+            path = "/mnt/nfs"
+            read_only = false
+                      }
+                    }' >> /etc/nomad.d/base.hcl
 
     - name: Set the current MAC address for eth0.
       tags:
