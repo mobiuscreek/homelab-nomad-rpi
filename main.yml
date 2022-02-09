@@ -16,6 +16,12 @@
     - role: ansible-nomad
       tags:
         - ansible-nomad
+    - role: ansible-vault 
+      tags:
+        - ansible-vault
+    - role: ansible-vim
+      tags:
+        - ansible-vim
   
   tasks:
     - name: Set nomad cluster env variable
