@@ -24,6 +24,13 @@
         - ansible-vim
   
   tasks:
+    # For some reason the ansible-vault task
+    # doesn't write the storage volume in the config
+    - name: Set file storage for Vault
+      shell: echo 'storage "file" {
+                   path = "/mnt/nfs/vault"
+      }' |> /etc/vault.d/vault.hcl
+
     - name: Set nomad cluster env variable
       environment:
         NOMAD_ADDR: "http://homeserver.local:4646"
