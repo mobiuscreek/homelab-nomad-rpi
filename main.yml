@@ -19,7 +19,7 @@
     - role: ansible-vault 
       tags:
         - ansible-vault
-    - role: ansible-vim
+    - role: ansible-role-vim
       tags:
         - ansible-vim
   
