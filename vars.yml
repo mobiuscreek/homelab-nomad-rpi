@@ -1,6 +1,6 @@
 mac_address_mapping:
   # wlan MAC address
-  "b8:27:eb:f6:ff:0d":
+  "04:02:70:71:e8:e8":
     name: homecluster1
     ip: "192.168.0.220"
   "60:7b:06:fd:4f:d7":
@@ -19,3 +19,17 @@ cluster_ip_gateway: "192.168.0.1"
 # Docker config
 docker_users:
   - pi
+
+# Vault config
+
+vault_cluster_name:
+  - homecluster
+
+vault_datacenter:
+  - homecluster
+
+vault_backend:
+  - file
+
+vault_data_path:
+  - /mnt/nfs/vault
