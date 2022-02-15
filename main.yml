@@ -29,7 +29,15 @@
     - name: Set file storage for Vault
       shell: echo 'storage "file" {
                    path = "/mnt/nfs/vault"
-      }' |> /etc/vault.d/vault.hcl
+                   }' |> /etc/vault.d/vault.hcl
+
+    - name: Install CNI plugin for Consul
+      shell: |
+             curl -L -o cni-plugin.tgz https://github.com/containernetworking/plugins/releases/download/v1.0.1/cni-plugins-linux-arm64-v1.0.1.tgz
+             mkdir -p /opt/cni/bin
+             tar -C /opt/cni/bin -xzf cni-plugin.tgz
+      tags:
+        - cni-plugin
 
     - name: Set nomad cluster env variable
       environment:
