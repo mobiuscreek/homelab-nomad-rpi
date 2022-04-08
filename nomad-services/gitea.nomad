@@ -9,7 +9,6 @@ job "gitea" {
        
       port "http" {
         static = 3000
-        to = 3000
       }
 
       port "ssh" {
@@ -28,14 +27,25 @@ job "gitea" {
       mode     = "fail"
     }
 
-    task "web" {
+    task "gitea" {
       driver = "docker"
 
       service {
-        name = "gitea-web"
-        tags = ["gitea", "web"]
+        name = "gitea"
         port = "http"
-      }
+        tags = [
+          "traefik.enable=true",
+          "traefik.http.routers.gitea.entrypoints=http",
+          "traefik.http.routers.gitea.rule=Host(`gitea.homelab.local`)",
+           ]
+        check {
+          type = "http"
+          path = "/"
+          interval = "60s"
+          timeout = "20s"      
+         }
+         }
+ 
 
       service {
         name = "gitea-ssh"
