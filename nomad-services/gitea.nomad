@@ -6,7 +6,9 @@ job "gitea" {
     count = 1
 
     network {
+       
       port "http" {
+        static = 3000
         to = 3000
       }
 
@@ -46,20 +48,11 @@ job "gitea" {
 
         ports = ["http", "ssh"]
         volumes = [
-          "local/gitea.ini:/data/gitea/conf/app.ini",
-          "/data:/data/gitea/"
+          "/config:/etc/gitea",
+          "/data:/data"
          ]
         }
 
-      template {
-        source = "local/app.ini"
-        destination = "local/gitea.ini" # Rendered template.
-        change_mode = "restart"
-
-        # HACK:
-        # https://github.com/hashicorp/nomad/issues/5020#issuecomment-778608068
-        perms = "777"
-      }
 
       env {
         # owner of `/data/gitea` on host.
