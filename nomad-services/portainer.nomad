@@ -1,7 +1,11 @@
 job "portainer" {
   region      = "global"
   datacenters = ["homecluster"]
-  type        = "system"
+  type        = "service"
+   constraint {
+     attribute = "${node.unique.name}"
+     value = "node3"
+    }
 
   group "portainer" {
     count = 1
