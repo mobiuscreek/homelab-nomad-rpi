@@ -43,6 +43,10 @@ job "paperless" {
           "/data/paperless-ng/consume:/usr/src/paperless/consume",
           ]
       }
+      env {
+        PAPERLESS_ADMIN_USER = "***REMOVED***"
+        PAPERLESS_ADMIN_PASSWORD = "***REMOVED***"
+        }
 
 
       resources {
