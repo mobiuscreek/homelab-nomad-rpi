@@ -28,8 +28,9 @@ job "vaultwarden" {
         name = "vaultwarden"
         tags = [
           "traefik.enable=true",
-          "traefik.http.routers.homer.entrypoints=http",
-          "traefik.http.routers.homer.rule=Host(`vaultwarden.homelab.local`)",
+          "traefik.http.routers.vaultwarden_https.rule=Host(`vaultwarden.homelab.local`)",
+          "traefik.http.routers.vaultwarden_https.entrypoints=https",
+          "traefik.http.routers.vaultwarden_https.tls.certresolver=letsEncrypt",
         ]
         check {
           type     = "http"
