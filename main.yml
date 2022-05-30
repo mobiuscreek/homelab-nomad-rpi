@@ -131,7 +131,7 @@
               mkdir -p /mnt/configs
               echo "192.168.0.213:/mnt/nfs    /mnt/nfs   nfs auto,nofail,noatime,nolock,intr,tcp,actimeo=1800 0 0
                     192.168.0.213:/mnt/nfs1   /mnt/nfs1  nfs auto,nofail,noatime,nolock,intr,tcp,actimeo=1800 0 0 
-                    192.168.0.213:/configs    /mnt/configs nfs auto,nofail,noatime,nolock,intro,tcp,actimeo=1800 0 0" >> /etc/fstab
+                    192.168.0.213:/configs    /mnt/configs nfs auto,nofail,noatime,nolock,intr,tcp,actimeo=1800 0 0" >> /etc/fstab
   handlers:
 
   - name: update hostname
