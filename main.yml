@@ -55,6 +55,12 @@
             path = "/mnt/nfs"
             read_only = false
                       }
+                    }
+                  client {
+          host_volume "nomad_nfs1" {
+            path = "/mnt/nfs1"
+            read_only = false
+                      }
                     }' >> /etc/nomad.d/base.hcl
 
     - name: Set the current MAC address for eth0.
@@ -112,11 +118,20 @@
       tags:
         - NFS client conf
       shell: |
+              cat /etc/fstab
+      register: mounts
+        
+    - name: Write to fstab if not exists
+      tags:
+        - NFS client conf
+      when: mounts.stdout.find('nfs1') == -1
+      shell: |
               mkdir -p /mnt/nfs
-              chown -R pi:pi /mnt/nfs 
-              mount 192.168.0.220:/mnt/nfs /mnt/nfs  
-
-
+              mkdir -p /mnt/nfs1
+              mkdir -p /mnt/configs
+              echo "192.168.0.213:/mnt/nfs    /mnt/nfs   nfs auto,nofail,noatime,nolock,intr,tcp,actimeo=1800 0 0
+                    192.168.0.213:/mnt/nfs1   /mnt/nfs1  nfs auto,nofail,noatime,nolock,intr,tcp,actimeo=1800 0 0 
+                    192.168.0.213:/configs    /mnt/configs nfs auto,nofail,noatime,nolock,intro,tcp,actimeo=1800 0 0" >> /etc/fstab
   handlers:
 
   - name: update hostname
