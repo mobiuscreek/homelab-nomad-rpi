@@ -1,10 +1,12 @@
 mac_address_mapping:
-  # wlan MAC address
+  "aa:b5:c6:59:9f:2f":
+    name: home-node-1
+    ip: "192.168.0.222"
   "04:02:70:71:e8:e8":
-    name: homecluster1
+    name: home-node-3
     ip: "192.168.0.220"
   "60:7b:06:fd:4f:d7":
-    name: homecluster2
+    name: home-node-2
     ip: "192.168.0.221"
 
   
