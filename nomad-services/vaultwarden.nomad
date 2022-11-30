@@ -19,7 +19,7 @@ job "vaultwarden" {
         image        = "vaultwarden/server:1.24.0"
         ports        = ["http"]
         volumes = [
-          "/data/vw-data/:/data/",
+          "/mnt/configs/docker-data/vaultwarden:/data/"
         ]
       }
 
@@ -46,8 +46,8 @@ job "vaultwarden" {
       }
 
       resources {
-        cpu    = 80
-        memory = 128
+        cpu    = 40
+        memory = 64
       }
     }
   }
