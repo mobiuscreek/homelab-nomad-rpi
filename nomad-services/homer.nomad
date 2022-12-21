@@ -20,7 +20,7 @@ job "homer" {
         args = [ 
         "-bind", "9000" ]
         volumes = [
-          "/local/homer/assets:/www/assets",
+          "/configs/docker-data/homer/assets:/www/assets",
         ]
       }
 
