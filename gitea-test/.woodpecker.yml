@@ -1,5 +1,0 @@
-pipeline:
-  first-job:
-    image: busybox
-    commands:
-      - echo "first run"
