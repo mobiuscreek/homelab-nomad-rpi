@@ -19,7 +19,7 @@ job "cloudbeaver" {
         image        = "andrisasuke/cloudbeaver:latest"
         ports        = ["http"]
         volumes = [
-          "/data/cloudbeaver/workspace:/opt/cloudbeaver/workspace",
+          "/configs/docker-data/cloudbeaver/workspace:/opt/cloudbeaver/workspace",
         ]
       }
 

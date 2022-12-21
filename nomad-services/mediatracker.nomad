@@ -24,8 +24,8 @@ job "mediatracker" {
         image        = "bonukai/mediatracker:0.1.0-beta.19"
         ports        = ["http"]
         volumes = [
-          "/local/mediatracker/.config/mediatracker/data:/storage",
-          "/local/mediatracker/assets:/assets"
+          "/configs/docker-data/mediatracker/.config/mediatracker/data:/storage",
+          "/configs/docker-data/mediatracker/assets:/assets"
         ]
       }
 
