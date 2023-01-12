@@ -1,0 +1,40 @@
+{ "variables": { "wifi_name": "", "wifi_***REMOVED***":""
+  },
+  "builders": [{ "type": "arm", "file_urls" : ["https://downloads.raspberrypi.org/raspios_arm64/images/raspios_arm64-2022-09-26/2022-09-22-raspios-bullseye-arm64.img.xz"], "file_checksum_url": 
+    "https://downloads.raspberrypi.org/raspios_arm64/images/raspios_arm64-2022-09-26/2022-09-22-raspios-bullseye-arm64.img.xz.sha256", "file_checksum": "sha256", "file_target_extension": "xz", "file_unarchive_cmd": ["xz", "--decompress", "$ARCHIVE_PATH"], "image_build_method": "reuse", "image_path": "raspberry-pi.img", 
+    "image_size": "3.2G", "image_type": "dos", "image_partitions": [
+      { "name": "boot", "type": "c", "start_sector": "8192", "filesystem": "vfat", "size": "256M", "mountpoint": "/boot"
+      },
+      { "name": "root", "type": "83", "start_sector": "532480", "filesystem": "ext4", "size": "2.8G", "mountpoint": "/"
+      }
+    ], "image_chroot_env": ["PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"], "qemu_binary_source_path": "/usr/bin/qemu-aarch64-static", 
+    "qemu_binary_destination_path": "/usr/bin/qemu-aarch64-static"
+  }],
+ "provisioners": [
+    { "type": "file", "source": "./configs/.bashrc", "destination": "/home/pi/.bashrc"
+    },
+    { "type": "file", "source": "./configs/.vimrc", "destination": "/home/pi/.vimrc"
+    },
+    { "type": "file", "source": "./configs/userconf.txt", "destination": "/boot/userconf.txt"
+    },
+    { "type": "shell", "inline": [
+        "echo 'Install apt packages'", "apt-get update", "apt-get -y install curl net-tools ifstat vim nmap ufw locales", "apt-get -y clean", "apt-get -y autoremove"
+      ]
+    },
+    { "type": "shell", "inline": ["locale-gen en_US.UTF-8"]
+    },
+    { "type": "shell", "inline": ["dpkg-reconfigure --frontend noninteractive locales"]
+    },
+    { "type": "shell", "inline": [ "echo '$nameserver 8.8.8.8\n192.168.0.74' > /etc/resolv.conf" ]
+    },
+    { "type": "shell", "inline": [ "echo 'network={' >> /etc/wpa_supplicant/wpa_supplicant.conf", "echo ' ssid=\"{{user `wifi_name`}}\"' >> /etc/wpa_supplicant/wpa_supplicant.conf", 
+      "echo ' psk=\"{{user `wifi_***REMOVED***`}}\"' >> /etc/wpa_supplicant/wpa_supplicant.conf", "echo '}' >> /etc/wpa_supplicant/wpa_supplicant.conf" ]
+     },
+     { "type": "shell", "inline": [ "touch /boot/ssh"
+      ]
+    }
+
+
+  ]
+}
+
