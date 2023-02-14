@@ -1,4 +1,5 @@
-
+variable "paperless_admin" {}
+variable "paperless_***REMOVED***" {}
 job "paperless" { 
   region      = "global"
   datacenters = ["homecluster"]
@@ -34,18 +35,18 @@ job "paperless" {
     task "paperless-ng" {
       driver = "docker"
       config {
-        image = "jonaswinkler/paperless-ng:latest"
+        image = "jonaswinkler/paperless-ng:1.5.0"
         ports = ["http"]
         volumes = [
-          "/data/paperless-ng/data:/usr/src/paperless/data",
-          "/data/paperless-ng/media:/usr/src/paperless/media",
-          "/data/paperless-ng/export:/usr/src/paperless/export",
-          "/data/paperless-ng/consume:/usr/src/paperless/consume",
+          "/mnt/configs/docker-data/paperless-ng/data:/usr/src/paperless/data",
+          "/mnt/configs/docker-data/paperless-ng/media:/usr/src/paperless/media",
+          "/mnt/configs/docker-data/paperless-ng/export:/usr/src/paperless/export",
+          "/mnt/configs/docker-data/paperless-ng/consume:/usr/src/paperless/consume",
           ]
       }
       env {
-        PAPERLESS_ADMIN_USER = "***REMOVED***"
-        PAPERLESS_ADMIN_PASSWORD = "***REMOVED***"
+        PAPERLESS_ADMIN_USER = "${var.paperless_admin}"
+        PAPERLESS_ADMIN_PASSWORD = "${var.paperless_***REMOVED***}"
         }
 
 
