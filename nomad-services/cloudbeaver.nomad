@@ -16,7 +16,7 @@ job "cloudbeaver" {
       driver = "docker"
 
       config {
-        image        = "andrisasuke/cloudbeaver:22.3.3"
+        image        = "dbeaver/cloudbeaver:23.1.1"
         ports        = ["http"]
         volumes = [
           "/mnt/configs/docker-data/cloudbeaver/workspace:/opt/cloudbeaver/workspace",
