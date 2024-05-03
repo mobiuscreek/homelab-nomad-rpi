@@ -130,6 +130,9 @@ DEFAULT_MERGE_STYLE = merge
 [repository.signing]
 DEFAULT_TRUST_MODEL = committer
 
+[webhook]
+ALLOWED_HOST_LIST=*
+
 EOH 
 }
       driver = "docker"
@@ -165,6 +168,7 @@ EOH
           "/mnt/configs/docker-data/gitea:/data",
           "local/app.ini:/data/gitea/conf/app.ini"
          ]
+        dns_servers = ["192.168.0.74", "9.9.9.9"]
         }
 
 
