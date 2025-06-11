@@ -35,7 +35,7 @@ In order to execute the commands in this step you need to have [packer](https://
 
 The file `debian.json` includes the configuration of a custom debian image for the Pis. To create it with Packer, type the following:
 
-`sudo packer build -var wifi_name=WIFI_NAME -var wifi_***REMOVED***=WIFI_PASSWORD debian.json`
+`sudo packer build -var wifi_name=WIFI_NAME -var wifi_password=WIFI_PASSWORD debian.json`
 
 After the build finishes it will create a `raspberry-pi.img` file. To flash the image to a USB/SD card using dd type the following (it's assumed that /dev/sda/ is the sd card/USB, otherwise change accordingly):
 
@@ -43,8 +43,8 @@ After the build finishes it will create a `raspberry-pi.img` file. To flash the 
 
 ## Acknowledgments
 
-[Pi Dramble](https://github.com/geerlingguy/raspberry-pi-dramble)
-[hashi-homelab](https://github.com/perrymanuk/hashi-homelab)
-[hashi-homelab](https://github.com/aldoborrero/hashi-homelab)
-[home-lab](https://github.com/assareh/home-lab)
-[packer-builder-arm](https://github.com/mkaczanowski/packer-builder-arm)
+- [Pi Dramble](https://github.com/geerlingguy/raspberry-pi-dramble)
+- [hashi-homelab](https://github.com/perrymanuk/hashi-homelab)
+- [hashi-homelab](https://github.com/aldoborrero/hashi-homelab)
+- [home-lab](https://github.com/assareh/home-lab)
+- [packer-builder-arm](https://github.com/mkaczanowski/packer-builder-arm)
