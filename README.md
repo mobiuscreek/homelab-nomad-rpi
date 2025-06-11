@@ -22,7 +22,7 @@ All the nomad services are in the nomad-service folder. Each file is written in 
 
 1. Install nomad in your host machine.
 2. Run `export NOMAD_ADDR=http://192.168.0.222:4646` (or set it to your chosen static IP) to export the Nomad server's address so you can deploy the services.
-3. Run `nomad job run nomad-services/seafile.nomad`
+3. Run `nomad job run nomad-services/paperless.nomad`
 
 To pass variable names in the job file create a file _jobname.vars_ as described by the manual. For example to pass the variable names in `paperless.nomad` run:
 
